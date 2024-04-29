@@ -86,3 +86,41 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestAdditionalDB(unittest.TestCase):
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get returns the object based on the class name and id"""
+        new_state = State(name="Nairobi")
+        new_state.save()
+        new_state_id = new_state.id
+        self.assertEqual(models.storage.get(State, new_state_id), new_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the number of objects in storage"""
+        self.assertEqual(models.storage.count(), 1)
+        new_state = State(name="California")
+        new_state.save()
+        self.assertEqual(models.storage.count(), 2)
+        new_state2 = State(name="Nevada")
+        new_state2.save()
+        self.assertEqual(models.storage.count(), 3)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_none(self):
+        """Test that get returns None when no class or id is passed"""
+        self.assertIsNone(models.storage.get(None, None))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_none(self):
+        """Test that count returns the number of objects in storage"""
+        self.assertEqual(models.storage.count(None), 3)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_cls(self):
+        """Test that count returns the number of objects in storage"""
+        self.assertEqual(models.storage.count(State), 2)
+        self.assertEqual(models.storage.count(User), 0)
