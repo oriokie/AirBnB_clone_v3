@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 
 
-@app_views.route('/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     """Retrieves the list of all cities objects"""
     state = storage.get(State, state_id)
@@ -22,7 +22,7 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id):
     """A function that retrieves a specific city object"""
-    city = storage.get(State, city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
     return (jsonify(city.to_dict()))
@@ -32,7 +32,7 @@ def get_city(city_id):
                  strict_slashes=False)
 def delete_city(city_id):
     """A function that deletes a State object"""
-    city = storage.get(State, city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     storage.delete(city)
@@ -53,7 +53,7 @@ def post_city(state_id):
         abort(400, "Missing name")
 
     data = request.get_json()
-    new_city = State(**data)
+    new_city = City(**data)
     new_city.save()
     return (jsonify(new_city.to_dict()), 201)
 
