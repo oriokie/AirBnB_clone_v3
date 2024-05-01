@@ -16,5 +16,10 @@ def stats():
     """Retrieves the number of each objects by type"""
     classes = {"Amenity": "amenities", "City": "cities", "Place": "places",
                "Review": "reviews", "State": "states", "User": "users"}
-    num_objs = {key: storage.count(value) for key, value in classes.items()}
+    num_objs = {}
+    for key, value in classes.items():
+        try:
+            num_objs[value] = storage.count(key)
+        except:
+            num_objs[value] = 0
     return jsonify(num_objs)
