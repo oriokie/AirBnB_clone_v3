@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" This file handles all the default REST API actions for states"""
 from models.state import State
 from models import storage
 from api.v1.views import app_views
