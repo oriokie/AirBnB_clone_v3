@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This is the cities file for the API Blueprint"""
 from models.state import State
 from models.city import City
 from models import storage
