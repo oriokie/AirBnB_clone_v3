@@ -58,7 +58,7 @@ def post_city(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def put_state(city_id):
+def put_city(city_id):
     """Method for updating a city"""
     city = storage.get(City, city_id)
     if city is None:
